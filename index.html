@@ -1,39 +1,33 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Conversor de Temperaturas</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Convesor de Moedas Basico</title>
+    <link rel="stylesheet" href="CSS/main.css">
 </head>
-<body>
-    <div class="container">
-        <h2>Conversor de Temperaturas</h2>
-
-        <label>Temperatura:</label>
-        <input type="number" id="valor" value="0">
-
-        <label>De:</label>
-        <select id="de">
-            <option value="C">Celsius (°C)</option>
-            <option value="F">Fahrenheit (°F)</option>
-            <option value="K">Kelvin (K)</option>
-        </select>
-
-        <label>Para:</label>
-        <select id="para">
-            <option value="K">Kelvin (K)</option>
-            <option value="C">Celsius (°C)</option>
-            <option value="F">Fahrenheit (°F)</option>
-        </select>
-
-        <button onclick="converter()">Calcular</button>
-
-        <div id="resultado"></div>
-
-        <footer>Autor: Thiago</footer>
+<body>  
+    <h1>Conversor De Moedas Basico</h1>
+<div class="container">
+    <form id="calcForm">
+        <input type="number" id="num1" name="num1" placeholder="Valor Desejado" required/>
+        <select id="conversao" name="conversao" required>
+            <option value="" disabled selected>De: </option>
+            <option value="real">Real R$</option>
+                <option value="dolar">Dólar US$</option>
+                <option value="euro">Euro €</option>
+        </select>      
+        <select id="convertor" name="convertor" required>
+            <option value="" disabled selected>Para: </option>
+             <option value="real">Real R$</option>
+                <option value="dolar">Dólar US$</option>
+                <option value="euro">Euro €</option>
+        </select>    
+        <button type="submit">Calcular</button>
+    </form>
+    <div id="erro"></div>
+    <div id="resultado"></div>
     </div>
-
-    <script src="script.js"></script>
+    <script src="Js/scrypt.js"></script>
 </body>
 </html>
