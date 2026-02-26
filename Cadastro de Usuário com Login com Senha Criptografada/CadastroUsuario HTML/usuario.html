@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Usuários</title>
+    <link rel="stylesheet" href="CSS/main.css">
+</head>
+<body>
+    <div style="display: flex; justify-content: space-between; align-items: center; width: 90%; margin-bottom: 20px;">
+        <div id="usuario-logado" style="color: white; font-weight: bold;"></div>
+        <button onclick="logout()" style="background-color: #f44336; padding: 8px 16px; font-size: 14px;">Sair</button>
+    </div>
+
+    <div class="cabecalho-lista">
+        <h2>Usuários</h2>
+        <a href="index.html" class="btn-voltar-cadastro">+ Novo Cadastro</a>
+    </div>
+    
+    <div class="container-lista">
+        <table id="tabela-usuarios">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Perfil</th>
+                    <th>Cidade</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script src="Js/login.js"></script>
+    <script src="Js/lista.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            verificarLogin();
+            exibirUsuarioLogado();
+        });
+    </script>
+</body>
+</html>
