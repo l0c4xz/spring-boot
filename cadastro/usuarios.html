@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Usuários</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: #f3f4f6;
+            margin: 0;
+            padding: 30px;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: auto;
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+
+        h2 {
+            margin-bottom: 20px;
+            color: #1f2933;
+        }
+
+        .topo {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .novo {
+            padding: 10px 16px;
+            background: #4f46e5;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .novo:hover {
+            background: #4338ca;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+        }
+
+        th {
+            background: #4f46e5;
+            color: white;
+        }
+
+        tr:hover {
+            background: #f9fafb;
+        }
+
+        button {
+            padding: 6px 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
+        }
+
+        .editar {
+            background: #f59e0b;
+            color: white;
+        }
+
+        .deletar {
+            background: #dc2626;
+            color: white;
+        }
+
+        .mensagem {
+            margin-top: 15px;
+            font-weight: 600;
+            text-align: center;
+        }
+
+        .erro { color: #dc2626; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="topo">
+        <h2>Usuários</h2>
+        <button class="novo" onclick="novoUsuario()">Novo Usuário</button>
+    </div>
+
+    <table>
+        <thead>
+            <tr>
+                <th>Nome</th>
+                <th>Email</th>
+                <th>Perfil</th>
+                <th>Cidade</th>
+                <th>Ações</th>
+            </tr>
+        </thead>
+        <tbody id="tabelaUsuarios"></tbody>
+    </table>
+
+    <div id="mensagem" class="mensagem"></div>
+</div>
+
+<script>
+const API = 'http://localhost:8080/usuarios';
+const tabela = document.getElementById('tabelaUsuarios');
+const mensagem = document.getElementById('mensagem');
+
+// se usar JWT, descomenta:
+// const token = localStorage.getItem('token');
+
+function carregarUsuarios() {
+    fetch(API /*,{
+        headers: { 'Authorization': 'Bearer ' + token }
+    }*/)
+    .then(res => {
+        if (!res.ok) throw new Error();
+        return res.json();
+    })
+    .then(usuarios => {
+        tabela.innerHTML = '';
+
+        if (usuarios.length === 0) {
+            tabela.innerHTML = `
+                <tr>
+                    <td colspan="5" style="text-align:center">Nenhum usuário cadastrado</td>
+                </tr>`;
+            return;
+        }
+
+        usuarios.forEach(u => {
+            tabela.innerHTML += `
+                <tr>
+                    <td>${u.nome}</td>
+                    <td>${u.email}</td>
+                    <td>${u.perfil}</td>
+                    <td>${u.cidade || ''}</td>
+                    <td>
+                        <button class="editar" onclick="editar(${u.id})">Editar</button>
+                        <button class="deletar" onclick="deletar(${u.id})">Excluir</button>
+                    </td>
+                </tr>
+            `;
+        });
+    })
+    .catch(() => {
+        mensagem.innerHTML = '<span class="erro">Erro ao carregar usuários.</span>';
+    });
+}
+
+function novoUsuario() {
+    window.location.href = 'cadastro.html';
+}
+
+function editar(id) {
+    window.location.href = `cadastro.html?id=${id}`;
+}
+
+function deletar(id) {
+    if (!confirm('Deseja realmente excluir este usuário?')) return;
+
+    fetch(`${API}/${id}`, {
+        method: 'DELETE'/*,
+        headers: { 'Authorization': 'Bearer ' + token }*/
+    })
+    .then(res => {
+        if (!res.ok) throw new Error();
+        carregarUsuarios();
+    })
+    .catch(() => {
+        mensagem.innerHTML = '<span class="erro">Erro ao excluir usuário.</span>';
+    });
+}
+
+carregarUsuarios();
+</script>
+
+</body>
+</html>

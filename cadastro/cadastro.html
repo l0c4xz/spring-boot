@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro de Usuário</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background: linear-gradient(135deg, #4f46e5, #6366f1);
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .container {
+            background: #fff;
+            padding: 30px 35px;
+            border-radius: 12px;
+            width: 100%;
+            max-width: 520px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+        }
+
+        h2 {
+            text-align: center;
+            margin-bottom: 25px;
+            color: #1f2933;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            color: #374151;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px 12px;
+            border-radius: 8px;
+            border: 1px solid #d1d5db;
+            font-size: 14px;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #6366f1;
+            box-shadow: 0 0 0 2px rgba(99,102,241,0.2);
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: #4f46e5;
+            border: none;
+            border-radius: 8px;
+            color: white;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        button:hover {
+            background: #4338ca;
+        }
+
+        .mensagem {
+            margin-top: 15px;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .sucesso { color: #16a34a; }
+        .erro { color: #dc2626; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <h2 id="titulo">Cadastro de Usuário</h2>
+
+    <form id="usuarioForm">
+        <input type="hidden" id="id">
+
+        <div class="form-group">
+            <label>Nome</label>
+            <input type="text" id="nome" required>
+        </div>
+
+        <div class="form-group">
+            <label>Email</label>
+            <input type="email" id="email" required>
+        </div>
+
+        <div class="form-group" id="grupoSenha">
+            <label>Senha</label>
+            <input type="password" id="senha">
+        </div>
+
+        <div class="form-group">
+            <label>Perfil</label>
+            <select id="perfil">
+                <option value="USER">USER</option>
+                <option value="ADMIN">ADMIN</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Endereço</label>
+            <input type="text" id="endereco">
+        </div>
+
+        <div class="form-group">
+            <label>Bairro</label>
+            <input type="text" id="bairro">
+        </div>
+
+        <div class="form-group">
+            <label>Complemento</label>
+            <input type="text" id="complemento">
+        </div>
+
+        <div class="form-group">
+            <label>CEP</label>
+            <input type="text" id="cep">
+        </div>
+
+        <div class="form-group">
+            <label>Cidade</label>
+            <input type="text" id="cidade">
+        </div>
+
+        <div class="form-group">
+            <label>Estado</label>
+            <input type="text" id="estado">
+        </div>
+
+        <button type="submit" id="btnSalvar">Salvar Usuário</button>
+    </form>
+
+    <div id="mensagem" class="mensagem"></div>
+</div>
+
+<script>
+const params = new URLSearchParams(window.location.search);
+const idUsuario = params.get('id');
+
+const form = document.getElementById('usuarioForm');
+const btnSalvar = document.getElementById('btnSalvar');
+const titulo = document.getElementById('titulo');
+const mensagem = document.getElementById('mensagem');
+const grupoSenha = document.getElementById('grupoSenha');
+
+if (idUsuario) {
+    titulo.innerText = 'Editar Usuário';
+    btnSalvar.innerText = 'Atualizar Usuário';
+    //grupoSenha.style.display = 'none';
+    carregarUsuario(idUsuario);
+} else {
+    senha.required = true;
+}
+
+function carregarUsuario(id) {
+    fetch(`http://localhost:8080/usuarios/${id}`)
+        .then(res => {
+            if (!res.ok) throw new Error();
+            return res.json();
+        })
+        .then(u => {
+            document.getElementById('id').value = u.id;
+            nome.value = u.nome;
+            email.value = u.email;
+            perfil.value = u.perfil;
+            endereco.value = u.endereco || '';
+            bairro.value = u.bairro || '';
+            complemento.value = u.complemento || '';
+            cep.value = u.cep || '';
+            cidade.value = u.cidade || '';
+            estado.value = u.estado || '';
+        })
+        .catch(() => {
+            mensagem.innerHTML =
+                '<span class="erro">Erro ao carregar usuário para edição.</span>';
+        });
+}
+
+form.addEventListener('submit', function (e) {
+    e.preventDefault();
+
+    const usuario = {
+        id: idUsuario ? Number(idUsuario) : undefined,
+        nome: nome.value,
+        email: email.value,
+        perfil: perfil.value,
+        endereco: endereco.value,
+        bairro: bairro.value,
+        complemento: complemento.value,
+        cep: cep.value,
+        cidade: cidade.value,
+        estado: estado.value
+    };
+
+    // só envia senha se estiver cadastrando
+    //if (!idUsuario) {
+        usuario.senha = senha.value;
+    //}
+
+    //Operador Ternário
+    //const url = condicao ? valorSeVerdadeiro : valorSeFalso; 
+    const url = idUsuario
+        ? `http://localhost:8080/usuarios/${idUsuario}`
+        : 'http://localhost:8080/usuarios';
+
+    const method = idUsuario ? 'PUT' : 'POST';
+
+    fetch(url, {
+        method,
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(usuario)
+    })
+    .then(res => {
+        if (!res.ok) throw new Error();
+        if (idUsuario) {
+            window.location.href = 'usuarios.html';
+        } else {
+            window.location.href = 'usuarios.html';
+        }
+    })
+    .catch(() => {
+        mensagem.innerHTML =
+            '<span class="erro">Erro ao salvar usuário.</span>';
+    });
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Login</title>
+
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: linear-gradient(135deg, #5f2c82, #49a09d);
+    }
+
+    .login-container {
+        background: #ffffff;
+        padding: 40px;
+        border-radius: 12px;
+        width: 350px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        text-align: center;
+    }
+
+    .login-container h2 {
+        margin-bottom: 25px;
+        color: #333;
+    }
+
+    .input-group {
+        margin-bottom: 15px;
+        text-align: left;
+    }
+
+    .input-group input {
+        width: 100%;
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        outline: none;
+        transition: 0.3s;
+    }
+
+    .input-group input:focus {
+        border-color: #5f2c82;
+    }
+
+    button {
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 6px;
+        background: #5f2c82;
+        color: white;
+        font-size: 16px;
+        cursor: pointer;
+        transition: 0.3s;
+    }
+
+    button:hover {
+        background: #4b2067;
+    }
+
+    .error {
+        color: red;
+        margin-top: 10px;
+        font-size: 14px;
+    }
+</style>
+</head>
+<body>
+
+<div class="login-container">
+    <h2>Login</h2>
+
+    <form id="loginForm">
+        <div class="input-group">
+            <input type="email" id="email" placeholder="Email" required>
+        </div>
+
+        <div class="input-group">
+            <input type="password" id="senha" placeholder="Senha" required>
+        </div>
+
+        <button type="submit">Entrar</button>
+
+        <div class="error" id="errorMsg"></div>
+    </form>
+</div>
+
+<script>
+document.getElementById("loginForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const email = document.getElementById("email").value;
+    const senha = document.getElementById("senha").value;
+    const errorMsg = document.getElementById("errorMsg");
+
+    errorMsg.textContent = "";
+
+    fetch("http://localhost:8080/usuarios/login", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            email: email,
+            senha: senha
+        })
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error("Email ou senha inválidos");
+        }
+        return response.json();
+    })
+    .then(usuario => {
+        // salva usuário no navegador
+        localStorage.setItem("usuarioLogado", JSON.stringify(usuario));
+
+        alert("Bem-vindo " + usuario.nome);
+
+        // redireciona
+        window.location.href = "usuarios.html";
+    })
+    .catch(error => {
+        errorMsg.textContent = error.message;
+    });
+});
+</script>
+
+</body>
+</html>
