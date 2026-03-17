@@ -1,0 +1,439 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Segoe UI', sans-serif;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #000000, #363636);
+  color: rgb(255, 255, 255);
+  padding: 40px 0;
+}
+
+
+.container {
+  width: 90%;
+  max-width: 600px;
+  margin: 40px auto;
+  padding: 40px;
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(12px);
+  box-shadow: 0 20px 40px rgba(172, 166, 166, 0.4);
+}
+
+h1, h2 {
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+#calcForm {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+input, select {
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(26, 25, 25, 0.2);
+  background: rgba(255,255,255,0.05);
+  color: white;
+  font-size: 15px;
+  transition: 0.3s;
+}
+
+input:focus, select:focus {
+  outline: none;
+  border-color: #1a1d1f;
+  box-shadow: 0 0 15px rgba(56,189,248,0.4);
+}
+
+button {
+  padding: 14px;
+  border-radius: 10px;
+  border: none;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(135deg, #c25c5c, #d81212);
+  color: rgb(255, 255, 255);
+  transition: 0.3s;
+}
+
+button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(122, 104, 104, 0.4);
+}
+
+
+.btn-pagina {
+  position: fixed;
+  top: 25px;
+  left: 25px;
+  background: linear-gradient(135deg, #f97316, #ef4444);
+  padding: 10px 20px;
+  border-radius: 12px;
+  font-weight: bold;
+  color: white;
+  text-decoration: none;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.3);
+  transition: 0.3s;
+}
+
+.btn-pagina:hover {
+  transform: scale(1.05);
+}
+
+
+.cabecalho-lista {
+  width: 95%;
+  max-width: 1100px;
+  margin: 0 auto 25px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container-lista {
+  width: 95%;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 30px;
+  border-radius: 18px;
+  background: rgba(202, 90, 90, 0.08);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+  overflow-x: auto;
+}
+
+.container-lista table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.container-lista th {
+  padding: 14px;
+  text-align: left;
+  background: rgba(255,255,255,0.1);
+}
+
+.container-lista td {
+  padding: 14px;
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.container-lista tbody tr:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.btn-voltar-cadastro {
+  background: linear-gradient(135deg, #22d3ee, #0ea5e9);
+  padding: 10px 18px;
+  border-radius: 10px;
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  transition: 0.3s;
+}
+
+.btn-voltar-cadastro:hover {
+  transform: translateY(-2px);
+}
+
+
+.btn-editar {
+  background: #22c55e;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+.btn-excluir {
+  background: #ef4444;
+  padding: 6px 12px;
+  border-radius: 8px;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+i {
+  margin-right: 8px;
+}
+
+/* ===== EFEITO GLOW NOS BOTÕES ===== */
+
+button, .btn-voltar-cadastro {
+  position: relative;
+  overflow: hidden;
+}
+
+button::after,
+.btn-voltar-cadastro::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  background: rgba(255,255,255,0.15);
+  transition: 0.4s;
+}
+
+button:hover::after,
+.btn-voltar-cadastro:hover::after {
+  width: 100%;
+}
+
+/* ===== ANIMAÇÃO SUAVE NA TABELA ===== */
+
+.container-lista tbody tr {
+  transition: 0.3s;
+}
+
+.container-lista tbody tr:hover {
+  transform: scale(1.01);
+}
+
+/* ===== INPUT COM ICONE INTERNO (opcional) ===== */
+
+.input-icon {
+  position: relative;
+}
+
+.input-icon i {
+  position: absolute;
+  left: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  color: #495053;
+}
+
+.input-icon input {
+  padding-left: 35px;
+}
+
+.dashboard-container {
+  width: 95%;
+  max-width: 1100px;
+  margin: 60px auto;
+  text-align: center;
+}
+
+.cards-dashboard {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 25px;
+  margin-top: 40px;
+}
+
+.card-dash {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(10px);
+  padding: 35px 20px;
+  border-radius: 18px;
+  box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+  transition: 0.3s;
+}
+
+.card-dash:hover {
+  transform: translateY(-8px);
+}
+
+.card-dash i {
+  font-size: 28px;
+  margin-bottom: 15px;
+  color: #060707;
+}
+
+.card-dash h3 {
+  font-size: 28px;
+  margin-bottom: 8px;
+}
+
+.topo-sistema {
+  width: 95%;
+  max-width: 1100px;
+  margin: 20px auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#usuario-logado {
+  font-weight: 600;
+}
+
+.btn-sair {
+  background: #ef4444;
+  padding: 8px 16px;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  color: white;
+  transition: 0.3s;
+}
+
+
+
+.btn-sair:hover {
+  background: #dc2626;
+}
+
+#form-editar {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Reduzi um pouco para caber melhor */
+    max-width: 100%; /* Mude de 400px para 100% */
+    width: 100%;
+}
+
+#form-editar button {
+    margin-top: 10px; /* Ajustado */
+    padding: 14px;    /* Padronizado com os outros botões */
+    border-radius: 10px;
+    cursor: pointer;
+    width: 100%;      /* Botão ocupa a largura total */
+}
+
+.btn-cancelar {
+    background: rgba(255, 255, 255, 0.1) !important; /* Estilo mais discreto */
+    color: white;
+    border: 1px solid rgba(255, 255, 255, 0.2) !important;
+}
+
+.btn-cancelar:hover {
+    background: rgba(255, 255, 255, 0.2) !important;
+}
+
+/*dash*/
+.busca-dashboard {
+    margin: 20px 0;
+}
+
+.busca-dashboard input {
+    padding: 8px;
+    width: 250px;
+}
+
+.busca-dashboard button {
+    padding: 8px 12px;
+    cursor: pointer;
+}
+
+.resultado-item, .card-ultimo {
+    background: #1e1e2f;
+    padding: 10px;
+    margin-top: 8px;
+    border-radius: 8px;
+}
+
+#graficoPerfil {
+    margin-top: 40px;
+}
+.btn-limpar {
+    padding: 8px 12px;
+    margin-left: 5px;
+    cursor: pointer;
+    background-color: #444;
+    color: white;
+    border: none;
+    border-radius: 4px;
+}
+.toast {
+    position: fixed;
+    top: 20px;
+    right: -300px;
+    padding: 15px 20px;
+    color: white;
+    border-radius: 8px;
+    transition: right 0.4s ease;
+    z-index: 9999;
+    font-weight: bold;
+}
+
+.toast-sucesso {
+    background: #2ecc71;
+}
+
+.toast-erro {
+    background: #e74c3c;
+}
+
+.toast.mostrar {
+    right: 20px;
+}
+/* ===== AÇÕES CABEÇALHO ===== */
+
+.acoes-cabecalho {
+  display: flex;
+  gap: 15px;
+}
+
+
+
+#loading-screen {
+  position: fixed;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #0f172a, #1e293b);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 9999;
+  transition: opacity 0.6s ease, visibility 0.6s ease;
+}
+
+.loading-content {
+  text-align: center;
+  color: white;
+}
+
+.logo-sistema {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin-bottom: 30px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+.progress-bar {
+  width: 250px;
+  height: 6px;
+  background: rgba(255,255,255,0.1);
+  border-radius: 20px;
+  overflow: hidden;
+  margin: 0 auto 15px;
+}
+
+.progress {
+  width: 0%;
+  height: 100%;
+  background: #f83838;
+  animation: carregar 2s ease forwards;
+}
+
+.loading-text {
+  font-size: 14px;
+  opacity: 0.7;
+}
+
+@keyframes carregar {
+  from { width: 0%; }
+  to { width: 100%; }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+#loading-screen.hidden {
+  opacity: 0;
+  visibility: hidden;
+}

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lista de Usuários</title>
+
+    <link rel="stylesheet" href="CSS/main.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+
+    <div class="topo-sistema">
+       <div id="usuario-logado" class="usuario-logado"></div>
+
+        <button onclick="logout()" class="btn-sair">
+            <i class="fa-solid fa-power-off"></i> Sair
+        </button>
+    </div>
+
+    <div class="cabecalho-lista">
+        <h2><i class="fa-solid fa-users"></i> Usuários</h2>
+
+        <div class="acoes-cabecalho">
+           
+
+            <a href="index.html" class="btn-voltar-cadastro">
+                <i class="fa-solid fa-user-plus"></i> Novo Cadastro
+            </a>
+        </div>
+    </div>
+
+    <div class="container-lista">
+        <table id="tabela-usuarios">
+            <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Perfil</th>
+                    <th>Cidade</th>
+                    <th>Ações</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+        </table>
+    </div>
+
+    <script src="Js/login.js"></script>
+    <script src="Js/lista.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            verificarLogin();
+            exibirUsuarioLogado();
+        });
+    </script>
+
+
+
+
+</body>
+</html>

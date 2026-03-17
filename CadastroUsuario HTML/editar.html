@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Editar Usuário</title>
+    <link rel="stylesheet" href="CSS/main.css">
+</head>
+<body>
+
+        <div class="loading-content">
+        <h1 class="logo-sistema">EDITAR</h1>
+        <div class="progress-bar">
+            <div class="progress"></div>
+        </div>
+    </div>
+
+<div class="container">
+
+    
+    <form id="form-editar">
+        <div class="input-icon">
+            <i class="fa-solid fa-user"></i>
+            <input type="text" id="nome" placeholder="Nome" required>
+        </div>
+        
+        <div class="input-icon">
+            <i class="fa-solid fa-envelope"></i>
+            <input type="email" id="email" placeholder="Email" required>
+        </div>
+
+        <div class="input-icon">
+            <i class="fa-solid fa-id-badge"></i>
+            <input type="text" id="perfil" placeholder="Perfil" required>
+        </div>
+
+        <div class="input-icon">
+            <i class="fa-solid fa-city"></i>
+            <input type="text" id="cidade" placeholder="Cidade" required>
+        </div>
+
+        <div class="input-icon">
+            <i class="fa-solid fa-location-dot"></i>
+            <input type="text" id="endereco" placeholder="Endereço" required>
+        </div>
+
+        <button type="submit">
+            <i class="fa-solid fa-floppy-disk"></i> Salvar Alterações
+        </button>
+        
+        <button type="button" onclick="cancelarEdicao()" class="btn-cancelar">
+            <i class="fa-solid fa-xmark"></i> Cancelar
+        </button>
+    </form>
+</div>
+
+    <script src="Js/editar.js"></script>
+
+</body>
+</html>

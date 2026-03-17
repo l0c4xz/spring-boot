@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <title>Nova Senha</title>
+    <link rel="stylesheet" href="redefinir.css">
+</head>
+<body>
+
+    <div class="container">
+        <h2>Criar Nova Senha</h2>
+        <p id="infoEmail" style="text-align: center; color: #38bdf8; font-size: 14px; margin-bottom: 20px;"></p>
+
+        <form id="redefinirForm">
+            <input type="password" id="novaSenha" placeholder="Nova Senha" required minlength="4">
+            <input type="password" id="confirmarSenha" placeholder="Confirmar Senha" required>
+            
+            <button type="submit">Atualizar Senha</button>
+        </form>
+        <div id="mensagem" style="margin-top: 15px; text-align: center; font-weight: bold;"></div>
+    </div>
+
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const emailUsuario = urlParams.get('email');
+
+        if (emailUsuario) {
+            document.getElementById('infoEmail').innerText = `Redefinindo para: ${emailUsuario}`;
+        } else {
+            alert("E-mail não identificado na URL!");
+        }
+
+        const form = document.getElementById('redefinirForm');
+        const mensagem = document.getElementById('mensagem');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const novaSenha = document.getElementById('novaSenha').value;
+            const confirmarSenha = document.getElementById('confirmarSenha').value;
+
+            if (novaSenha !== confirmarSenha) {
+                mensagem.style.color = "#ef4444";
+                mensagem.textContent = "As senhas não coincidem!";
+                return;
+            }
+
+            try {
+                const response = await fetch('http://localhost:8080/usuarios/redefinir-senha', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: emailUsuario, novaSenha: novaSenha })
+                });
+
+                if (response.ok) {
+                    mensagem.style.color = "#22c55e";
+                    mensagem.textContent = "Senha alterada com sucesso! Redirecionando...";
+                    setTimeout(() => { window.location.href = 'login.html'; }, 2000);
+                } else {
+                    throw new Error();
+                }
+            } catch (err) {
+                mensagem.style.color = "#ef4444";
+                mensagem.textContent = "Erro ao atualizar senha.";
+            }
+        });
+    </script>
+
+
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Gradiente seguindo o padrão do seu sistema */
+    background: linear-gradient(135deg, #0f172a, #1e293b);
+    color: white;
+    padding: 20px;
+}
+
+/* ===== CONTAINER GLASSMORPHISM ===== */
+.container {
+    width: 100%;
+    max-width: 450px;
+    padding: 40px;
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.08);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4);
+    text-align: center;
+}
+
+h2 {
+    margin-bottom: 10px;
+    font-size: 24px;
+    letter-spacing: 1px;
+}
+
+#infoEmail {
+    display: block;
+    margin-bottom: 25px;
+    padding: 8px;
+    background: rgba(56, 189, 248, 0.1);
+    border-radius: 8px;
+    border: 1px dashed rgba(56, 189, 248, 0.3);
+}
+
+/* ===== FORMULÁRIO ===== */
+#redefinirForm {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+}
+
+input {
+    width: 100%;
+    padding: 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    background: rgba(255, 255, 255, 0.05);
+    color: white;
+    font-size: 15px;
+    transition: all 0.3s ease;
+}
+
+input:focus {
+    outline: none;
+    border-color: #38bdf8;
+    box-shadow: 0 0 15px rgba(56, 189, 248, 0.4);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+/* ===== BOTÃO ===== */
+button {
+    padding: 14px;
+    border-radius: 10px;
+    border: none;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    background: linear-gradient(135deg, #38bdf8, #6366f1);
+    color: white;
+    transition: transform 0.3s, box-shadow 0.3s;
+    margin-top: 10px;
+}
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(56, 189, 248, 0.4);
+}
+
+button:active {
+    transform: translateY(0);
+}
+
+/* ===== MENSAGENS DE STATUS ===== */
+#mensagem {
+    min-height: 20px;
+    font-size: 14px;
+}
+
+/* Responsividade simples */
+@media (max-width: 480px) {
+    .container {
+        padding: 25px;
+    }
+}
+</style>
+</body>
+</html>
